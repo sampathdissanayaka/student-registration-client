@@ -1,0 +1,131 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="container">
+      <div class="demo-button-container">
+        <h2 *ngIf="type == 'create'"><b>Add New Student</b></h2>
+        <h2 *ngIf="type == 'edit'"><b>Edit Student</b></h2>
+        <h2 *ngIf="type == 'view'"><b>View Student</b></h2>
+      </div>
+
+      <form [formGroup]="studentForm">
+        <div class="row">
+          <div
+            class="col-md-4"
+            *ngIf="!profileImageUrl"
+            [ngClass]="type == 'view' ? 'd-none' : ''"
+          >
+            <h3>Upload Profile Image</h3>
+            <input type="file" (change)="onFileSelected($event)" />
+          </div>
+
+          <div class="col-md-4" *ngIf="profileImageUrl">
+            <h3>Uploaded Image:</h3>
+            <img [src]="profileImageUrl" alt="Profile Image" width="400" />
+            <br />
+            <button
+              *ngIf="type != 'view'"
+              mat-button
+              (click)="deleteImg()"
+              class="mt-2"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+        <div class="row mt-4">
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width form-input-field">
+              <mat-label>First Name</mat-label>
+              <input type="text" matInput formControlName="FirstName" />
+              <mat-error
+                *ngIf="studentForm.get('FirstName')?.hasError('required')"
+              >
+                First Name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width form-input-field">
+              <mat-label>Last Name</mat-label>
+              <input type="text" matInput formControlName="LastName" />
+              <mat-error
+                *ngIf="studentForm.get('LastName')?.hasError('required')"
+              >
+                Last Name is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width form-input-field">
+              <mat-label>Mobile</mat-label>
+              <input type="text" matInput formControlName="Mobile" />
+              <mat-error
+                *ngIf="studentForm.get('Mobile')?.hasError('required')"
+              >
+                Mobile is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width form-input-field">
+              <mat-label>Email</mat-label>
+              <input type="text" matInput formControlName="Email" />
+              <mat-error *ngIf="studentForm.get('Email')?.hasError('required')">
+                Email is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width form-input-field">
+              <mat-label>NIC</mat-label>
+              <input type="text" matInput formControlName="NIC" />
+              <mat-error *ngIf="studentForm.get('NIC')?.hasError('required')">
+                NIC is required
+              </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width form-input-field">
+              <mat-label>Date Of Birth</mat-label>
+              <input
+                matInput
+                [matDatepicker]="picker"
+                formControlName="DateOfBirth"
+                readonly
+              />
+              <mat-datepicker-toggle
+                matIconSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field class="example-full-width form-input-field">
+              <mat-label>Address</mat-label>
+              <input type="text" matInput formControlName="Address" />
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col-md-12">
+            <button mat-button (click)="cancel()">
+              {{ type == "view" ? "Back" : "Cancel" }}
+            </button>
+            &nbsp;&nbsp;
+            <button
+              (click)="onClickSave(studentForm.value)"
+              mat-raised-button
+              color="primary"
+              [disabled]="studentForm.invalid"
+              *ngIf="type != 'view'"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
